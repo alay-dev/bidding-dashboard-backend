@@ -3,6 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const upworkRoute = require("./routes/upworkRoutes");
+const routes = require("./routes/routes");
 const cors = require("cors");
 const axios = require("axios");
 
@@ -23,5 +24,10 @@ app.use(bodyParser.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", upworkRoute);
+app.use("/api", routes);
+
+// app.listen(5000,function(){
+//   console.log("server is running on port 5000");
+// });
 
 module.exports = app;
