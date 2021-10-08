@@ -7,6 +7,7 @@ mongoose.connect(DB).then(() => {
 }).catch((err) => console.log(err));
 
 const Keyword = require("../models/keyword");
+const Config = require("../models/config");
 
 
 
@@ -15,12 +16,15 @@ exports.get_keywords = catchAsync(async (req, res, next) => {
   Keyword.find({})
         .populate("keywords","score raw_keywords")
         .exec((err, keywords) => {
-          res.status(200).json({
-            status: "success",
-            keywords: keywords,
+          Config.find({label : "countries"})
+          .exec((err, countries) => {
+            res.status(200).json({
+              status: "success",
+              countries: countries,
+              keywords: keywords,
+            });
           });
         });
- 
 });
 
 exports.save_keywords = catchAsync(async (req, res, next) => {
@@ -32,6 +36,13 @@ exports.save_keywords = catchAsync(async (req, res, next) => {
         }
     )
   });
+
+  Config.updateOne(
+    {label: "countries"},
+    {$set: {value: req.body.countries}},
+    (err, config) => {
+    }
+  )
   res.status(200).json({
     status: "success",
   });
