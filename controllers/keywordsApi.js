@@ -16,12 +16,17 @@ exports.get_keywords = catchAsync(async (req, res, next) => {
   Keyword.find({})
         .populate("keywords","score raw_keywords")
         .exec((err, keywords) => {
-          Config.find({label : "countries"})
-          .exec((err, countries) => {
+          Config.find({})
+          .exec((err, configs) => {
             res.status(200).json({
               status: "success",
-              countries: countries,
+              countries: configs.filter(function(value){
+                return value.label === 'countries';
+              }),
               keywords: keywords,
+              save_searches: configs.filter(function(value){
+                return value.label === 'search';
+              }),
             });
           });
         });
@@ -43,6 +48,14 @@ exports.save_keywords = catchAsync(async (req, res, next) => {
     (err, config) => {
     }
   )
+
+  Config.updateOne(
+    {label: "search"},
+    {$set: {value: req.body.search}},
+    (err, config) => {
+    }
+  )
+
   res.status(200).json({
     status: "success",
   });
