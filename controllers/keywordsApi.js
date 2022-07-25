@@ -14,7 +14,7 @@ const Config = require("../models/config");
 exports.get_keywords = catchAsync(async (req, res, next) => {
   var keywords;
   Keyword.find({})
-        .populate("keywords","score raw_keywords")
+        .populate("keywords","score raw_keywords phrases")
         .exec((err, keywords) => {
           Config.find({})
           .exec((err, configs) => {
@@ -55,6 +55,22 @@ exports.save_keywords = catchAsync(async (req, res, next) => {
     (err, config) => {
     }
   )
+
+  res.status(200).json({
+    status: "success",
+  });
+  next();
+});
+
+exports.save_phrases = catchAsync(async (req, res, next) => {
+  for (let [score, phrase] of Object.entries(req.body.phrases)) {
+    Keyword.updateOne(
+      {score: score},
+      {$set: {phrases: phrase}},
+      (err, keyword) => {
+      }
+    )
+  }
 
   res.status(200).json({
     status: "success",

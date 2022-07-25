@@ -14,7 +14,11 @@ const keywordSchema = new mongoose.Schema({
     keywords: {
         type: Array,
         required:true,  
-    }
+    },
+    phrases: {
+        type: Object,
+        required:true,  
+    },
 },{timestamps: true});
 
 module.exports = mongoose.model("Keyword", keywordSchema);
