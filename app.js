@@ -12,7 +12,7 @@ const router = express.Router();
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000", 'http://bidding.puneetpugalia.com'],
   optionsSuccessStatus: 200,
 };
 
