@@ -3,7 +3,7 @@ const axios = require("axios");
 
 exports.get_token = catchAsync(async (req, res, next) => {
   let data = await axios.post(
-    `https://www.upwork.com/api/v3/oauth2/token?code=${req.body.code}&grant_type=authorization_code&client_id=a80c416b3496b5de682f9b8315771669&redirect_uri=http://192.168.1.7:3000/auth/callback&client_secret=54f3cd0fd5043a91`
+    `https://www.upwork.com/api/v3/oauth2/token?code=${req.body.code}&grant_type=authorization_code&client_id=a80c416b3496b5de682f9b8315771669&redirect_uri=http://bidding.puneetpugalia.com/auth/callback&client_secret=54f3cd0fd5043a91`
   );
 
   data = data.data;
