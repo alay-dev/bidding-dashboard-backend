@@ -27,6 +27,9 @@ exports.get_keywords = catchAsync(async (req, res, next) => {
               save_searches: configs.filter(function(value){
                 return value.label === 'search';
               }),
+              hide_projects: configs.filter(function(value){
+                return value.label === 'hideProjects';
+              }),
             });
           });
         });
@@ -52,6 +55,13 @@ exports.save_keywords = catchAsync(async (req, res, next) => {
   Config.updateOne(
     {label: "search"},
     {$set: {value: req.body.search}},
+    (err, config) => {
+    }
+  )
+
+  Config.updateOne(
+    {label: "hideProjects"},
+    {$set: {value: req.body.hide_projects}},
     (err, config) => {
     }
   )
