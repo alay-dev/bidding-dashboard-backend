@@ -59,13 +59,6 @@ exports.save_keywords = catchAsync(async (req, res, next) => {
     }
   )
 
-  Config.updateOne(
-    {label: "hideProjects"},
-    {$set: {value: req.body.hide_projects}},
-    (err, config) => {
-    }
-  )
-
   res.status(200).json({
     status: "success",
   });
@@ -85,5 +78,20 @@ exports.save_phrases = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
   });
+  next();
+});
+
+exports.save_hide_projects = catchAsync(async (req, res, next) => {
+  Config.updateOne(
+    {label: "hideProjects"},
+    {$set: {value: req.body.hide_projects}},
+    (err, config) => {
+    }
+  )
+
+  res.status(200).json({
+    status: "success",
+  });
+
   next();
 });
